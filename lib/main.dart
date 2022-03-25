@@ -34,13 +34,21 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             for (int element in _elements)
               ListTile(
-                key: ValueKey(_elements[element]),
+                key: ValueKey(element),
                 tileColor: element.isOdd ? Colors.amber : Colors.grey,
-                title: Text(
-                  "$element - Element",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.w800),
+                title: Dismissible(
+                  key: UniqueKey(),
+                  child: Text(
+                    "$element - Element",
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.w800),
+                  ),
+                  onDismissed: (direction) {
+                    setState(() {
+                      _elements.removeAt(element);
+                    });
+                  },
                 ),
               ),
           ],
